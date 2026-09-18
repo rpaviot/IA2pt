@@ -59,7 +59,7 @@ survey's redshift shells.
 
 ## Documentation
 
-https://ia2pt.readthedocs.io — the model statistics, the fitting pipeline and
+https://ia2pt.readthedocs.io/en/latest/ — the model statistics, the fitting pipeline and
 the Gaussian covariance, each with the arguments and outputs of every public
 function.
 
