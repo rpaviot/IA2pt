@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ia2pt"
+version = "0.2.0"
+description = "NLA / TATT two-point intrinsic-alignment model (wedged multipoles + projected statistics), likelihood, fit drivers and Gaussian covariance, from the UNIONS x DESI analysis"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Romain Paviot" }]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pyccl>=3.0",
+    "fast-pt>=3.0",
+    "iminuit>=2.20",
+]
+
+[project.optional-dependencies]
+samplers = ["nautilus-sampler>=1.0", "emcee>=3.1"]
+test = ["pytest>=7"]
+docs = ["sphinx>=7", "furo", "myst-parser"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
