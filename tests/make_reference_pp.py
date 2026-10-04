@@ -23,7 +23,8 @@ for cfg in ("NLA", "TATT"):
         r_p = ref["rp_edges"] if bin_avg else ref["rp_mid"]
         for nz in (False, True):
             m = TwoPointModel(list(ref["cosmology"]), cfg, do_rsd=True, pimax=100,
-                              rp_min_wedge=5.0, n_mu_wedge=101, bin_avg=bin_avg)
+                              rp_min_wedge=5.0, n_mu_wedge=101, bin_avg=bin_avg,
+                              nonlinear_bias=True)
             if nz:
                 m.set_nz(ref["z_bins"], ref["z_nz"], ref["nz_clustering"], ref["nz_shape"])
             k = f"{cfg}_{tag}_{'nz' if nz else 'z'}"

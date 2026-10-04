@@ -27,10 +27,11 @@ annular (2D) / spherical (3D) bin averages between the given bin edges.
 
 Conventions: separations in h^-1 Mpc, spectra in (h^-1 Mpc)^3; the IA amplitudes
 ``a1, a2`` follow the pyccl ``translate_IA_norm`` normalisation (a1 = A_IA of the
-NLA model, C1 rho_crit = 0.0134); ``bTA`` is the TATT density-weighting
-(a1delta = a1 * bTA). Linear bias ``b1``, second-order ``b2``; in TATT the tidal
-and third-order biases follow the local-Lagrangian relations bs = -4/7 (b1 - 1),
-b3nl = b1 - 1 (they are zero in NLA).
+NLA model, C1 rho_crit = 0.0139); ``bTA`` is the TATT density-weighting
+(a1delta = a1 * bTA). Linear bias ``b1``, second-order ``b2``. The tidal and
+third-order biases are zero unless ``nonlinear_bias=True`` (TATT only), which ties
+them to b1 through the local-Lagrangian relations bs = -4/7 (b1 - 1),
+b3nl = b1 - 1.
 
 Sign convention: e_+ is positive for RADIAL alignment (e_+ = -e_t of the
 lensing convention), so a positive a1 gives a positive ``xi~_{2,2}`` and a
@@ -122,6 +123,10 @@ class TwoPointModel:
         disables it (default 5.0).
     n_mu_wedge : int
         Number of mu points for the wedge integration (default 101).
+    nonlinear_bias : bool
+        TATT only: add the tidal and third-order density biases
+        bs = -4/7 (b1 - 1), b3nl = b1 - 1 to the one-loop P_gg / P_gI (default
+        False = linear bias b1, plus b2 if it is left free). Ignored for NLA.
 
     Notes
     -----
@@ -130,7 +135,7 @@ class TwoPointModel:
 
     def __init__(self, cosmology, config, do_rsd=True, pimax=100, dpi=0.1,
                  bin_avg=False, bin_factor=20, evolve_bias=False,
-                 rp_min_wedge=5.0, n_mu_wedge=101):
+                 rp_min_wedge=5.0, n_mu_wedge=101, nonlinear_bias=False):
         if config not in ("NLA", "TATT"):
             raise ValueError(f"config must be 'NLA' or 'TATT', got {config!r}")
         self.Omc, self.Omb, self.mnu, self.As, self.ns, self.h, self.zeff = cosmology
@@ -141,6 +146,7 @@ class TwoPointModel:
         self.bin_avg = bin_avg
         self.bin_factor = bin_factor
         self.evolve_bias = evolve_bias
+        self.nonlinear_bias = nonlinear_bias
         self.rp_min_wedge = rp_min_wedge
         self.n_mu_wedge = n_mu_wedge
         self.unique_z = True
@@ -295,7 +301,7 @@ class TwoPointModel:
 
     def _update_pks2d_if_needed(self, b1, b2, a1, a2, bTA):
         """Recompute the Pk2Ds only if the bias/IA parameters changed."""
-        if self.config == 'TATT':
+        if self.config == 'TATT' and self.nonlinear_bias:
             bs = -(4./7.) * (b1 - 1.)
             b3nl = b1 - 1.
         else:

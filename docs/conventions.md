@@ -22,13 +22,14 @@ flip such a measurement before fitting, or negate the fitted `a1`.
 ## Normalisation of `a1`, `a2`, `bTA`
 
 `a1` is the pyccl `translate_IA_norm` amplitude: for NLA it is $A_{\rm IA}$
-with $C_1 \rho_{\rm crit} = 0.0134$, so $P_{gI} = -a_1 C_1 \rho_{\rm crit}
+with $C_1 \rho_{\rm crit} = 0.0139$, so $P_{gI} = -a_1 C_1 \rho_{\rm crit}
 \Omega_m / D(z)\, b_1 P_{\delta\delta}$ at $\mu = 0$. `a2` is the TATT
 tidal-torquing amplitude in the same normalisation (`Om_m2_for_c2=False`,
 i.e. $C_2 \propto \Omega_m$, not $\Omega_m^2$) and `bTA` the density-weighting
-bias, $a_{1\delta} = a_1 b_{\rm TA}$. In TATT the tidal and third-order
-biases of the density tracer are tied to $b_1$: $b_s = -\tfrac{4}{7}(b_1-1)$,
-$b_{3nl} = b_1 - 1$; both are zero in NLA.
+bias, $a_{1\delta} = a_1 b_{\rm TA}$. The tidal and third-order biases of the
+density tracer are zero by default (linear bias). With `nonlinear_bias=True`
+(TATT only) they are tied to $b_1$: $b_s = -\tfrac{4}{7}(b_1-1)$,
+$b_{3nl} = b_1 - 1$.
 
 ## Redshift-space distortions
 

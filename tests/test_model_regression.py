@@ -31,7 +31,9 @@ def _model(ref, cfg, z=None, **kw):
     cosmo = list(ref["cosmology"])
     if z is not None:
         cosmo[-1] = float(z)
-    opts = dict(do_rsd=True, pimax=100, rp_min_wedge=5.0, n_mu_wedge=101, bin_avg=False)
+    # the references were made with the co-evolution tidal/third-order biases on
+    opts = dict(do_rsd=True, pimax=100, rp_min_wedge=5.0, n_mu_wedge=101, bin_avg=False,
+                nonlinear_bias=True)
     opts.update(kw)
     return TwoPointModel(cosmo, cfg, **opts)
 
@@ -163,3 +165,17 @@ def test_pp_limber_limit(ref, cfg):
     np.testing.assert_allclose(wpp, w0 + w4, rtol=3e-3)
     # w_xx crosses zero: absolute tolerance scaled by w_++
     np.testing.assert_allclose(wxx, w0 - w4, atol=3e-3 * np.abs(wpp).max())
+
+
+def test_nonlinear_bias_switch(ref):
+    """Linear bias (default) drops bs, b3nl: identical at b1 = 1, different otherwise."""
+    p = list(_pars(ref, "TATT"))
+    r_s = ref["s_mid"]
+    lin, nl = _model(ref, "TATT", nonlinear_bias=False), _model(ref, "TATT")
+    assert not np.allclose(lin.compute_xi_gg_wedge_monopole(r_s, *p),
+                           nl.compute_xi_gg_wedge_monopole(r_s, *p), rtol=1e-6)
+    p[0] = 1.0
+    np.testing.assert_allclose(lin.compute_xi_gg_wedge_monopole(r_s, *p),
+                               nl.compute_xi_gg_wedge_monopole(r_s, *p), rtol=RTOL)
+    np.testing.assert_allclose(lin.compute_xi_gi_wedge_quadrupole(r_s, *p),
+                               nl.compute_xi_gi_wedge_quadrupole(r_s, *p), rtol=RTOL)

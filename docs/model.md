@@ -17,7 +17,7 @@ fit are therefore the same physical model.
 ```python
 TwoPointModel(cosmology, config, do_rsd=True, pimax=100, dpi=0.1,
               bin_avg=False, bin_factor=20, evolve_bias=False,
-              rp_min_wedge=5.0, n_mu_wedge=101)
+              rp_min_wedge=5.0, n_mu_wedge=101, nonlinear_bias=False)
 ```
 
 | argument | meaning |
@@ -31,6 +31,7 @@ TwoPointModel(cosmology, config, do_rsd=True, pimax=100, dpi=0.1,
 | `evolve_bias` | $b_1(z) = b_1 D(z_{\rm ref}) / D(z)$ inside the PT tracer |
 | `rp_min_wedge` | minimum $r_p$ of the wedge cut applied to the multipoles [$h^{-1}$ Mpc]; `0` / `None` disables it |
 | `n_mu_wedge` | number of $\mu$ nodes of the wedge integral |
+| `nonlinear_bias` | TATT only: add $b_s=-\tfrac{4}{7}(b_1-1)$, $b_{3nl}=b_1-1$ to the one-loop spectra (default False = linear bias) |
 
 ### Redshift integration
 
