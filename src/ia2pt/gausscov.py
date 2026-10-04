@@ -73,7 +73,7 @@ __all__ = ["jbar", "Jbar", "density_profile", "gg_coeffs", "gp_coeffs",
            "cross_coeffs", "nonlin_pdd", "kaiser_nla_pk", "GaussianCov",
            "GaussianCovProjected", "fit_b1", "C1RHOC"]
 
-C1RHOC = 0.0134  # C1 rho_crit of the NLA amplitude (pyccl translate_IA_norm)
+C1RHOC = 0.0139  # C1 rho_crit of the NLA amplitude (pyccl translate_IA_norm)
 
 
 # =============================================================================
