@@ -2,7 +2,7 @@
 
 NLA / TATT two-point intrinsic-alignment model, likelihood, fit drivers and
 Gaussian covariance — the modelling layer of the UNIONS × DESI
-intrinsic-alignment analysis (Paviot et al., in prep.).
+intrinsic-alignment analysis ([Paviot et al. 2026](https://arxiv.org/abs/2610.40411)).
 
 The package answers three questions, one page each:
 
@@ -59,8 +59,8 @@ res = run_minuit(lik)          # res["bestfit"], res["errors"], res["chi2"]
 
 ## Citation
 
-Paviot et al., *UNIONS × DESI: intrinsic alignments of DESI BGS, LRG and ELG
-galaxies* (in prep.). The formalism follows Singh et al. 2023
+Paviot et al. 2026, *UNIONS: Red and blue alignments of DESI DR1 galaxies*
+([arXiv:2610.40411](https://arxiv.org/abs/2610.40411)). The formalism follows Singh et al. 2023
 ([arXiv:2307.02545](https://arxiv.org/abs/2307.02545)) for the multipoles and
 projections, Grieb et al. 2016 ([arXiv:1509.04293](https://arxiv.org/abs/1509.04293))
 for the Gaussian covariance, and uses pyccl (Chisari et al. 2019) and FAST-PT
